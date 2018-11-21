@@ -1,37 +1,42 @@
 #include <iostream>
 #include <cassert>
-
+#include <vector>
 
 using namespace std;
-const int MAX = 10 ;
+//int a [] = {2,14,30,29,42,31,112,1,4,45,11,-5,0,51};
 
-void swapfiets (int (&a)[MAX], int i)
+vector<int> list = {2,14,30,29,42,31,112,1,4,45,11,-5,0,51};
+
+const int MAX = list.size();
+
+void swap (vector<int>& list, int first,int second)
 {
     //preconditions:
-    assert((i-1)/2 >= 0 && (i-1)/2 < MAX);
-    //postconditions: this function swap the parent with its children.
+    assert(first >= 0 && first < MAX);
+    assert(second >= 0 && second < MAX);
+    //postconditions: this function swaps the 2 elements of the array/vector.
 
-    int temp = 0;
-    temp = a[i];
+    int temp;
 
-    a [i] = a[(i-1)/2];
-    a[(i-1)/2] = temp;
+    temp = list[first];
+    list[first] = list[second];
+    list[second] = temp;
 }
 
-void push_up(int (&a)[MAX], int i)
+void push_up(vector<int>& list, int i)
 {
     //preconditions:
     assert(i >= 0 && i < MAX);
     //postcondition: the elements is pushed to its highest position.
 
-    while (a[i] > a[(i-1)/2])
+    while (list[i] > list[(i-1)/2])
     {
-        swapfiets (a, i);
+        swap (list, i , (i-1)/2);
         i = (i-1)/2;
     }
 }
 
-void build_heap(int (&a)[MAX])
+void build_heap(vector<int>& list)
 {
     //preconditions:
     assert(true);
@@ -39,72 +44,86 @@ void build_heap(int (&a)[MAX])
 
     for (int i = 1 ; i < MAX ; i ++)
     {
-        push_up(a,i);
+        push_up(list,i);
     }
-
 }
 
-void swap (int (&a)[MAX], int first,int second)
+void push_down(vector<int>& list, int MAX_EL)
 {
-    int temp;
-
-    temp = a[first];
-
-    a[first] = a [second];
-
-    a[second] = temp;
-}
-
-void push_down(int (&a)[MAX], int i,int& counter)
-{
-    swap (a , 0 , MAX - 1 - counter );
-    cout <<counter << " last element: " << a[ MAX - 1 - counter] << endl;
-    counter ++ ;
-
-
-    while ((2*i+1 <(MAX - counter )) && (a[i] < a[2*i+1] || a[i] < a[2*i+2]) )
+    while (MAX_EL > 0)
     {
-        if (a[i] < a[2*i+1])
+        int i = 0;
+        while (2*i+1 < MAX_EL)
         {
-            swap (a, i , 2*i + 1);
-            i = 2*i + 1;
+            if(2*i+2 < MAX_EL && (list[2*i+1] >= list[2*i+2]))
+            {
+                if (list[i] <= list[2*i+1])
+                {
+                    swap (list, i , 2*i + 1);
+                    i = 2*i + 1;
+                }
+            }
+            else if (2*i+2 < MAX_EL && (list[2*i+1] < list[2*i+2]))
+            {
+                if (list[i] <= list[2*i+2])
+                {
+                    swap (list, i , 2*i + 2);
+                    i = 2*i + 2;
+                }
+            }
+            else if (list[i] <= list[2*i+1])
+            {
+                swap (list, i , 2*i + 1);
+                i = 2*i + 1;
+            }
+            i++;
         }
-        else
+        for (int i = 0 ; i < MAX_EL; i++)
         {
-            swap (a, i , 2*i + 2);
-            i = 2*i + 2;
+            cout << list[i] << " ";
         }
-    }
+        cout << endl ;
 
-}
-
-void pick_heap(int (&a)[MAX])
-{
-    int counter = 0 ;
-    for (int i = 0 ; i < MAX - counter ; i = i)
-    {
-        push_down(a,i, counter);
+        MAX_EL--;
     }
 }
 
-int main()
+void pick_heap(vector<int>& list)
 {
-    int a [MAX] = {2,14,30,29,42,30,11,-5,0,51};
-    build_heap(a);
+    int MAX_EL = MAX;
 
-    for (int i = 0 ; i < MAX ; i++)
+    for (int i = 0; i < MAX ; i++)
     {
-        cout << a[i] << " ";
+        swap (list ,0, MAX_EL-1);
+        cout<<"swapped: "<<endl;
+        for (int j = 0 ; j< MAX; j++)
+        {
+            cout << list[j] << " ";
+        }
+        cout << endl ;
+        MAX_EL--;
+        push_down(list ,MAX_EL);
     }
-    cout << endl ;
+}
 
-    pick_heap(a);
+int main() {
+    build_heap(list);
 
-    for (int i = 0 ; i < MAX ; i++)
-    {
-        cout << a[i] << " ";
+    cout << "Heaped array: " << endl;
+
+    for (int i = 0; i < MAX; i++) {
+        cout << list[i] << " ";
     }
-    cout << endl ;
+    cout << endl;
+
+    pick_heap(list);
+
+    cout << "Sorted array: " << endl;
+
+    for (int i = 0; i < MAX; i++) {
+        cout << list[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }
