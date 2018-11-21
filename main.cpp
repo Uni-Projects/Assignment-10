@@ -1,3 +1,9 @@
+/*
+ * Assignment 10
+ * Paolo Scattolin s1023775
+ * Johan Urban s1024726
+ * Answers follow the code.
+ * */
 #include <iostream>
 #include <cassert>
 #include <vector>
@@ -5,7 +11,7 @@
 using namespace std;
 //int a [] = {2,14,30,29,42,31,112,1,4,45,11,-5,0,51};
 
-vector<int> list = {2,14,30,29,42,31,112,1,4,45,11,-5,0,51};
+vector<int> list = {15, 40, 42, -15, 30, 35, 5};
 
 const int MAX = list.size();
 
@@ -127,3 +133,19 @@ int main() {
 
     return 0;
 }
+
+/*
+ * Answers:
+ *
+ * Part 1:
+ * a) O(1) - Does not contain any repetition.
+ * b) O(n) - One repetition with an upper bound.
+ *
+ * Part 2:
+ * a)
+ * b)
+ *      push_up: O(n)
+ *      build_heap: O(n)
+ *      push_down: O(n^2)
+ *      pick_heap: O(n^2)
+ **/
