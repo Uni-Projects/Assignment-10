@@ -130,7 +130,7 @@ int main() {
     // output in the console.
     build_heap(list);
 
-    cout << "Heaped array: " << endl;
+    cout << "Heaped vector: " << endl;
 
     for (int i = 0; i < MAX; i++) {
         cout << list[i] << " ";
@@ -139,7 +139,7 @@ int main() {
 
     pick_heap(list);
 
-    cout << "Sorted array: " << endl;
+    cout << "Sorted vector: " << endl;
 
     for (int i = 0; i < MAX; i++) {
         cout << list[i] << " ";
