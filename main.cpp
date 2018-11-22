@@ -56,6 +56,11 @@ void build_heap(vector<int>& list)
 
 void push_down(vector<int>& list, int MAX_EL)
 {
+    // precondition:
+    assert(MAX_EL >= 0);
+    // postcondition:
+    // A value is placed more and more toward the end of the vector being sorted,
+    // until it is no longer larger than one of its children.
     while (MAX_EL > 0)
     {
         int i = 0;
@@ -96,6 +101,11 @@ void push_down(vector<int>& list, int MAX_EL)
 
 void pick_heap(vector<int>& list)
 {
+    // precondition:
+    assert(true);
+    //postcondition:
+    //the vector is being sorted by a cooperation of two implemented functions:
+    // swap() and push_down().
     int MAX_EL = MAX;
 
     for (int i = 0; i < MAX ; i++)
@@ -113,6 +123,11 @@ void pick_heap(vector<int>& list)
 }
 
 int main() {
+    // precondition:
+    assert(true);
+    // postcondition:
+    // initiates the sorting algorithm Heap Sort and gives
+    // output in the console.
     build_heap(list);
 
     cout << "Heaped array: " << endl;
@@ -139,13 +154,14 @@ int main() {
  *
  * Part 1:
  * a) O(1) - Does not contain any repetition.
- * b) O(n) - One repetition with an upper bound.
+ * b) O(sqrt(n)) - One repetition with an upper bound, which is limited by the square root function.
  *
  * Part 2:
- * a)
+ * a)   (displayed in console)
  * b)
- *      push_up: O(n)
- *      build_heap: O(n)
- *      push_down: O(n^2)
- *      pick_heap: O(n^2)
+ *      push_up: O(n) - a single loop with an upper bound.
+ *      build_heap: O(n) - a single loop with an upper bound.
+ *      push_down: O(n^2) - 2 (nested) loops dependant of the same input.
+ *      pick_heap: O(n^2) - 2 (nested) loops dependant of the same input.
+ *      Heap Sort: O(2n+(2n^2)) - Addition of the sub-functions.
  **/
